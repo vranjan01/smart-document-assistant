@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  Design tokens — dark, professional "document intelligence" workspace.
+  Palette: deep charcoal/slate background, a single indigo accent for
+  interactive/AI elements, and a warm amber accent reserved exclusively
+  for citations/page references (so citations are visually distinct
+  from the rest of the UI at a glance, everywhere in the app).
+*/
+@layer base {
+  :root {
+    --background: 222 20% 97%;
+    --foreground: 222 20% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 20% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 20% 10%;
+    --primary: 245 65% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 222 15% 92%;
+    --secondary-foreground: 222 20% 15%;
+    --muted: 222 15% 94%;
+    --muted-foreground: 222 10% 45%;
+    --accent: 222 15% 92%;
+    --accent-foreground: 222 20% 15%;
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 222 15% 88%;
+    --input: 222 15% 88%;
+    --ring: 245 65% 60%;
+    --radius: 0.65rem;
+  }
+
+  .dark {
+    --background: 222 25% 7%;
+    --foreground: 220 20% 92%;
+    --card: 222 24% 10%;
+    --card-foreground: 220 20% 92%;
+    --popover: 222 24% 10%;
+    --popover-foreground: 220 20% 92%;
+    --primary: 245 70% 65%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 222 20% 15%;
+    --secondary-foreground: 220 20% 92%;
+    --muted: 222 20% 14%;
+    --muted-foreground: 220 10% 60%;
+    --accent: 222 20% 16%;
+    --accent-foreground: 220 20% 92%;
+    --destructive: 0 65% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 222 18% 18%;
+    --input: 222 18% 18%;
+    --ring: 245 70% 65%;
+    --radius: 0.65rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 10px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .citation-chip {
+    @apply inline-flex items-center gap-1 rounded-md border border-amber-500/30 bg-amber-500/10 px-1.5 py-0.5 text-[11px] font-medium text-amber-400;
+  }
+}
