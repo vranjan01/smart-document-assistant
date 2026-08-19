@@ -61,7 +61,7 @@ def answer_query(
     doc_ids: list[str] | None = None,
     top_k: int = 5,
     temperature: float = 0.3,
-    model: str = "gemini-2.5-flash",
+    model: str = "gemini-3.6-flash",
 ) -> dict:
     """Run retrieval + generation for a single chat turn. Returns the
     answer text plus the list of citation dicts actually retrieved."""

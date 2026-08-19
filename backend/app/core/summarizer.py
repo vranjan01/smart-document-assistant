@@ -29,7 +29,7 @@ def _get_document_context(doc_id: str, max_chunks: int = 40) -> str:
     return "\n\n".join(c["text"] for c in chunks)
 
 
-def generate_summary(doc_id: str, model: str = "gemini-2.5-flash", temperature: float = 0.3) -> dict:
+def generate_summary(doc_id: str, model: str = "gemini-3.6-flash", temperature: float = 0.3) -> dict:
     context = _get_document_context(doc_id)
     llm = get_llm(model=model, temperature=temperature)
 
@@ -55,7 +55,7 @@ Respond ONLY with valid JSON (no markdown fences), in this exact shape:
     }
 
 
-def generate_faqs(doc_id: str, model: str = "gemini-2.5-flash", temperature: float = 0.3, num_faqs: int = 6) -> list[dict]:
+def generate_faqs(doc_id: str, model: str = "gemini-3.6-flash", temperature: float = 0.3, num_faqs: int = 6) -> list[dict]:
     context = _get_document_context(doc_id)
     llm = get_llm(model=model, temperature=temperature)
 

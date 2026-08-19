@@ -56,9 +56,9 @@ answers, summaries, key points, FAQs), via `langchain-google-genai` /
 `ChatGoogleGenerativeAI`. There is no OpenAI dependency anywhere in this
 project — the only LLM-related environment variable is `GOOGLE_API_KEY`.
 
-- Default model: `gemini-2.5-flash` (configurable via `DEFAULT_LLM_MODEL`
+- Default model: `gemini-3.6-flash` (configurable via `DEFAULT_LLM_MODEL`
   in `.env`, or per-request from the Settings page — options include
-  `gemini-2.5-flash`, `gemini-2.5-pro`, `gemini-2.0-flash`).
+  `gemini-3.6-flash`, `gemini-2.5-pro`, `gemini-2.0-flash`).
 - All Gemini client construction and invocation goes through
   `app/core/llm.py`. If `GOOGLE_API_KEY` is missing, or Google rejects it
   as invalid, the API returns a clear `HTTPException` (400 for a missing

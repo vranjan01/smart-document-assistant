@@ -22,7 +22,7 @@ async def update_settings(new_settings: AppSettings):
     return AppSettings(**updated)
 
 
-AVAILABLE_MODELS = ["gemini-2.5-flash", "gemini-2.5-pro", "gemini-2.0-flash"]
+AVAILABLE_MODELS = ["gemini-3.6-flash", "gemini-2.5-pro", "gemini-2.0-flash"]
 AVAILABLE_EMBEDDING_MODELS = ["all-MiniLM-L6-v2", "all-mpnet-base-v2", "multi-qa-MiniLM-L6-cos-v1"]
 
 

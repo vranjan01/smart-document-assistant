@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 class Settings(BaseSettings):
     # Google Gemini
     google_api_key: str = ""
-    default_llm_model: str = "gemini-2.5-flash"
+    default_llm_model: str = "gemini-3.6-flash" 
 
     # Embeddings
     embedding_model: str = "all-MiniLM-L6-v2"

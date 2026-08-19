@@ -155,5 +155,5 @@ class AppSettings(BaseModel):
     chunk_overlap: int = 200
     top_k: int = 5
     temperature: float = 0.3
-    model: str = "gemini-2.5-flash"
+    model: str = "gemini-3.6-flash"
     embedding_model: str = "all-MiniLM-L6-v2"

@@ -136,7 +136,7 @@ smart-document-assistant/
 | Setting | Where | Default |
 |---|---|---|
 | Google Gemini API key | `backend/.env` → `GOOGLE_API_KEY` | — (required) |
-| Chat/generation model | Settings page or `.env` → `DEFAULT_LLM_MODEL` | `gemini-2.5-flash` |
+| Chat/generation model | Settings page or `.env` → `DEFAULT_LLM_MODEL` | `gemini-3.6-flash` |
 | Embedding model | Settings page or `.env` → `EMBEDDING_MODEL` | `all-MiniLM-L6-v2` |
 | Chunk size / overlap | Settings page | 1000 / 200 chars |
 | Top-K retrieved chunks | Settings page | 5 |
@@ -147,7 +147,7 @@ smart-document-assistant/
 
 All text generation (chat answers, summaries, key points, FAQs) is powered by
 **Google Gemini** via `langchain-google-genai` (`ChatGoogleGenerativeAI`),
-default model `gemini-2.5-flash`. There is no OpenAI dependency anywhere in
+default model `gemini-3.6-flash`. There is no OpenAI dependency anywhere in
 this project. Get a free API key at https://aistudio.google.com/apikey and
 set it as `GOOGLE_API_KEY` in `backend/.env`.
 
