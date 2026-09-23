@@ -10,6 +10,7 @@ auto-generated charts extracted from tables.
 from __future__ import annotations
 from datetime import datetime
 from fastapi import APIRouter, UploadFile, File, HTTPException
+from fastapi.responses import FileResponse
 
 from app.core import store
 from app.core.pdf_processor import parse_pdf
@@ -83,6 +84,29 @@ async def upload_documents(files: list[UploadFile] = File(...)):
 async def list_documents():
     docs = store.list_documents()
     return [DocumentMeta(**{k: v for k, v in d.items() if k != "path"}) for d in docs]
+
+
+@router.get("/{doc_id}/file")
+async def get_document_file(doc_id: str):
+    doc = _require_doc(doc_id)
+
+    path = doc.get("path")
+    if not path:
+        raise HTTPException(404, "Document file not found.")
+
+    from pathlib import Path
+
+    file_path = Path(path)
+
+    if not file_path.exists():
+        raise HTTPException(404, "Document file not found.")
+
+    return FileResponse(
+        path=str(file_path),
+        media_type="application/pdf",
+        filename=doc["filename"],
+        content_disposition_type="inline",
+    )
 
 
 @router.delete("/{doc_id}", response_model=DeleteResponse)

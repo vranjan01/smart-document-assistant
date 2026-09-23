@@ -43,6 +43,7 @@ export const api = {
         body: form,
       });
     },
+    fileUrl: (docId: string) => `${API_URL}/api/documents/${docId}/file`,
     delete: (docId: string) =>
       request<{ doc_id: string; deleted: boolean }>(`/api/documents/${docId}`, {
         method: "DELETE",
