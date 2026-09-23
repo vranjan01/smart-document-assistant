@@ -58,6 +58,11 @@ export interface ExtractedChart {
   data: Record<string, string | number>[];
 }
 
+export interface ExtractedTable {
+  page: number;
+  rows: (string | number | null)[][];
+}
+
 export interface AppSettings {
   chunk_size: number;
   chunk_overlap: number;

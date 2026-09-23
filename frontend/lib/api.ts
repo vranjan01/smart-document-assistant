@@ -5,6 +5,7 @@ import type {
   SearchResult,
   FAQItem,
   ExtractedChart,
+  ExtractedTable,
   AppSettings,
 } from "./types";
 
@@ -55,6 +56,10 @@ export const api = {
     charts: (docId: string) =>
       request<{ doc_id: string; charts: ExtractedChart[] }>(
         `/api/documents/${docId}/charts`
+      ),
+    tables: (docId: string) =>
+      request<{ doc_id: string; tables: ExtractedTable[] }>(
+        `/api/documents/${docId}/tables`
       ),
   },
 

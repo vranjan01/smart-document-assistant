@@ -20,7 +20,7 @@ from app.core.chart_extractor import extract_charts_for_document
 from app.utils.file_utils import generate_doc_id, save_upload_file, file_size_kb, delete_upload_file
 from app.models.schemas import (
     DocumentMeta, UploadResponse, DeleteResponse,
-    SummaryResponse, FAQResponse, ChartsResponse,
+    SummaryResponse, FAQResponse, ChartsResponse, TablesResponse
 )
 
 router = APIRouter(prefix="/api/documents", tags=["documents"])
@@ -122,6 +122,11 @@ async def get_charts(doc_id: str):
     charts = extract_charts_for_document(doc_id)
     return ChartsResponse(doc_id=doc_id, charts=charts)
 
+@router.get("/{doc_id}/tables", response_model=TablesResponse)
+async def get_tables(doc_id: str):
+    _require_doc(doc_id)
+    tables = store.get_tables(doc_id)
+    return TablesResponse(doc_id=doc_id, tables=tables)
 
 def _require_doc(doc_id: str) -> dict:
     doc = store.get_document(doc_id)

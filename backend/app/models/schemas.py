@@ -145,6 +145,14 @@ class ChartsResponse(BaseModel):
     doc_id: str
     charts: list[ExtractedChart]
 
+class ExtractedTable(BaseModel):
+    page: int
+    rows: list[list[Optional[str]]]
+
+
+class TablesResponse(BaseModel):
+    doc_id: str
+    tables: list[ExtractedTable]
 
 # ---------------------------------------------------------------------------
 # Settings

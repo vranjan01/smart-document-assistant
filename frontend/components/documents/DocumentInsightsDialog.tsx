@@ -12,7 +12,8 @@ import {
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { ChartRenderer } from "@/components/charts/ChartRenderer";
 import { api } from "@/lib/api";
-import type { DocumentMeta, FAQItem, ExtractedChart } from "@/lib/types";
+import type { DocumentMeta, FAQItem, ExtractedChart, ExtractedTable } from "@/lib/types";
+import { TableRenderer } from "@/components/tables/TableRenderer";
 
 interface DocumentInsightsDialogProps {
   doc: DocumentMeta | null;
@@ -26,6 +27,7 @@ export function DocumentInsightsDialog({ doc, open, onOpenChange }: DocumentInsi
   const [keyPoints, setKeyPoints] = useState<string[]>([]);
   const [faqs, setFaqs] = useState<FAQItem[]>([]);
   const [charts, setCharts] = useState<ExtractedChart[]>([]);
+  const [tables, setTables] = useState<ExtractedTable[]>([]);
   const [loaded, setLoaded] = useState<Set<string>>(new Set());
 
   useEffect(() => {
@@ -34,6 +36,7 @@ export function DocumentInsightsDialog({ doc, open, onOpenChange }: DocumentInsi
     setKeyPoints([]);
     setFaqs([]);
     setCharts([]);
+    setTables([]);
     setLoaded(new Set());
     loadTab("summary", doc.doc_id);
   }, [doc, open]);
@@ -52,6 +55,9 @@ export function DocumentInsightsDialog({ doc, open, onOpenChange }: DocumentInsi
       } else if (tab === "charts") {
         const res = await api.documents.charts(docId);
         setCharts(res.charts);
+      } else if (tab === "tables") {
+        const res = await api.documents.tables(docId);
+        setTables(res.tables);
       }
       setLoaded((prev) => new Set(prev).add(tab));
     } catch {
@@ -81,6 +87,7 @@ export function DocumentInsightsDialog({ doc, open, onOpenChange }: DocumentInsi
             <TabsTrigger value="summary">Summary</TabsTrigger>
             <TabsTrigger value="faqs">FAQs</TabsTrigger>
             <TabsTrigger value="charts">Charts</TabsTrigger>
+            <TabsTrigger value="tables">Tables</TabsTrigger>
           </TabsList>
 
           <TabsContent value="summary" className="space-y-4">
@@ -128,6 +135,17 @@ export function DocumentInsightsDialog({ doc, open, onOpenChange }: DocumentInsi
               <EmptyState text="No chartable numeric tables were found in this document." />
             ) : (
               charts.map((chart) => <ChartRenderer key={chart.chart_id} chart={chart} />)
+            )}
+          </TabsContent>
+          <TabsContent value="tables" className="space-y-4">
+            {loading && !loaded.has("tables") ? (
+              <LoadingState label="Extracting tables…" />
+            ) : tables.length === 0 ? (
+              <EmptyState text="No tables found in this document." />
+            ) : (
+              tables.map((table, index) => (
+                <TableRenderer key={index} table={table} index={index} />
+              ))
             )}
           </TabsContent>
         </Tabs>
