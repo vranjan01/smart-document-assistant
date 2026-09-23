@@ -76,6 +76,17 @@ export const api = {
         method: "POST",
         body: JSON.stringify(payload),
       }),
+    synthesize: (payload: {
+      query: string;
+      doc_ids: string[];
+      top_k?: number;
+      temperature?: number;
+      model?: string;
+    }) =>
+      request<{ session_id: string; message: ChatMessage }>("/api/chat/synthesize", {
+        method: "POST",
+        body: JSON.stringify(payload),
+      }),
     sessions: () => request<ChatSessionSummary[]>("/api/chat/sessions"),
     history: (sessionId: string) =>
       request<{ session_id: string; messages: ChatMessage[] }>(

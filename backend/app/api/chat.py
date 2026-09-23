@@ -86,3 +86,52 @@ async def delete_session(session_id: str):
     if not deleted:
         raise HTTPException(404, "Chat session not found.")
     return {"session_id": session_id, "deleted": True}
+
+@router.post("/synthesize", response_model=ChatResponse)
+async def synthesize(req: ChatRequest):
+    if not req.query.strip():
+        raise HTTPException(400, "Synthesis query cannot be empty.")
+
+    if not req.doc_ids or len(req.doc_ids) < 2:
+        raise HTTPException(
+            400,
+            "Select at least two documents for multi-document synthesis."
+        )
+
+    cfg = store.get_settings()
+    session_id = req.session_id or str(uuid.uuid4())[:12]
+
+    synthesis_query = f"""
+Perform a multi-document synthesis using the provided documents.
+
+User request:
+{req.query}
+
+Requirements:
+- Combine information from the selected documents.
+- Compare or connect information across documents when relevant.
+- Clearly identify differences or similarities when applicable.
+- Do not invent information that is not present in the documents.
+- Use the available source citations.
+"""
+
+    result = answer_query(
+        query=synthesis_query,
+        doc_ids=req.doc_ids,
+        top_k=req.top_k or cfg["top_k"],
+        temperature=(
+            req.temperature
+            if req.temperature is not None
+            else cfg["temperature"]
+        ),
+        model=req.model or cfg["model"],
+    )
+
+    return ChatResponse(
+        session_id=session_id,
+        message=ChatMessage(
+            role="assistant",
+            content=result["answer"],
+            citations=[Citation(**c) for c in result["citations"]],
+        ),
+    )
